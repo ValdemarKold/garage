@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GARÁGE — Dit eget bageri</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f7f4ef;
+  --bg2: #f0ece4;
+  --bg3: #e8e2d8;
+  --ink: #1c1a17;
+  --ink2: #4a4540;
+  --ink3: #8a8278;
+  --accent: #b85c38;
+  --accent-soft: rgba(184,92,56,0.08);
+  --warm: #d4895a;
+  --white: #fdfcfa;
+  --radius: 24px;
+  --radius-sm: 14px;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Jost', sans-serif;
+  font-weight: 300;
+  overflow-x: hidden;
+}
+
+/* NAV */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 200;
+  padding: 20px 52px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  background: rgba(247,244,239,0.88);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+}
+.nav-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px; font-weight: 600;
+  letter-spacing: 0.14em; color: var(--ink);
+}
+.nav-right { display:flex; align-items:center; gap:36px; }
+.nav-link {
+  font-size: 13px; font-weight: 400;
+  letter-spacing: 0.05em; color: var(--ink3);
+  text-decoration: none; transition: color 0.2s;
+}
+.nav-link:hover { color: var(--ink); }
+.nav-btn {
+  background: var(--ink); color: var(--white);
+  padding: 10px 24px; border-radius: 100px;
+  font-size: 13px; letter-spacing: 0.04em;
+  text-decoration: none; transition: all 0.25s;
+}
+.nav-btn:hover { background: var(--accent); transform: translateY(-1px); }
+
+/* HERO */
+.hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  padding: 120px 64px 80px;
+  gap: 40px;
+}
+.hero-left {
+  opacity: 0; transform: translateY(28px);
+  animation: riseUp 1s cubic-bezier(0.16,1,0.3,1) 0.2s forwards;
+}
+@keyframes riseUp {
+  to { opacity:1; transform:translateY(0); }
+}
+.hero-label {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--accent-soft); color: var(--accent);
+  padding: 6px 16px; border-radius: 100px;
+  font-size: 12px; letter-spacing: 0.08em;
+  text-transform: uppercase; margin-bottom: 32px;
+}
+.hero-h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(50px, 5.5vw, 80px);
+  font-weight: 400; line-height: 1.06;
+  color: var(--ink); margin-bottom: 28px;
+}
+.hero-h1 em { font-style: italic; color: var(--accent); font-weight: 300; }
+.hero-body {
+  font-size: 17px; line-height: 1.78;
+  color: var(--ink2); max-width: 420px; margin-bottom: 44px;
+}
+.hero-actions { display:flex; gap:16px; align-items:center; flex-wrap:wrap; }
+.btn-dark {
+  background: var(--ink); color: var(--white);
+  padding: 15px 34px; border-radius: 100px;
+  font-family: 'Jost', sans-serif; font-size: 15px; font-weight: 400;
+  letter-spacing: 0.04em; text-decoration: none; border: none; cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16,1,0.3,1); display: inline-block;
+}
+.btn-dark:hover {
+  background: var(--accent); transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(184,92,56,0.22);
+}
+.btn-ghost {
+  color: var(--ink3); font-size: 14px; text-decoration: none;
+  display: flex; align-items: center; gap: 6px; transition: color 0.2s;
+}
+.btn-ghost:hover { color: var(--accent); }
+
+/* HERO RIGHT */
+.hero-right {
+  opacity: 0;
+  animation: riseUp 1s cubic-bezier(0.16,1,0.3,1) 0.45s forwards;
+  display: flex; justify-content: center; align-items: center;
+}
+.scene-svg { width: 100%; max-width: 500px; filter: drop-shadow(0 32px 64px rgba(28,26,23,0.1)); }
+.float-group { animation: float 6s ease-in-out infinite; }
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+.steam1 { animation: steam 3s ease-in-out infinite 0s; }
+.steam2 { animation: steam 3s ease-in-out infinite 0.9s; }
+.steam3 { animation: steam 3s ease-in-out infinite 1.7s; }
+@keyframes steam {
+  0% { opacity:0; transform: translateY(0); }
+  35% { opacity:0.55; }
+  100% { opacity:0; transform: translateY(-26px) scaleX(1.3); }
+}
+
+/* STATS BAR */
+.stats-bar {
+  background: var(--white); border-radius: 20px;
+  margin: 0 52px; padding: 28px 48px;
+  display: grid; grid-template-columns: repeat(4,1fr);
+  box-shadow: 0 4px 40px rgba(0,0,0,0.06);
+}
+.stat-item {
+  text-align: center; padding: 8px 20px;
+  border-right: 1px solid rgba(0,0,0,0.08);
+}
+.stat-item:last-child { border-right: none; }
+.stat-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 40px; font-weight: 600; color: var(--ink); line-height: 1; margin-bottom: 6px;
+}
+.stat-lbl { font-size: 12px; color: var(--ink3); letter-spacing: 0.05em; }
+
+/* SHARED SECTION */
+.sec { padding: 110px 64px; max-width: 1240px; margin: 0 auto; }
+.sec-tag { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
+.sec-h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(38px, 4vw, 60px); font-weight: 400;
+  color: var(--ink); line-height: 1.1; margin-bottom: 18px;
+}
+.sec-h2 em { font-style: italic; font-weight: 300; color: var(--accent); }
+.sec-lead {
+  font-size: 17px; line-height: 1.78; color: var(--ink2);
+  max-width: 560px; margin-bottom: 60px;
+}
+
+/* CONCEPT CARDS */
+.c-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
+.c-card {
+  background: var(--white); border-radius: var(--radius); padding: 40px 34px;
+  transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), box-shadow 0.4s;
+  opacity: 0; transform: translateY(22px);
+}
+.c-card.vis { opacity:1; transform:translateY(0); }
+.c-card:hover { transform: translateY(-5px); box-shadow: 0 20px 56px rgba(0,0,0,0.09); }
+.c-icon { font-size: 30px; margin-bottom: 22px; }
+.c-title { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 600; color: var(--ink); margin-bottom: 11px; }
+.c-desc { font-size: 15px; line-height: 1.72; color: var(--ink2); }
+
+/* CONFIGS */
+.cfg-wrap {
+  background: var(--ink); border-radius: 44px;
+  margin: 0 24px; padding: 96px 64px; overflow: hidden; position: relative;
+}
+.cfg-wrap::before {
+  content:''; position:absolute; top:-160px; right:-160px;
+  width:500px; height:500px;
+  background: radial-gradient(circle, rgba(184,92,56,0.14) 0%, transparent 70%);
+  pointer-events: none;
+}
+.cfg-wrap .sec-h2 { color: var(--white); }
+.cfg-wrap .sec-lead { color: rgba(255,255,255,0.5); }
+.cfg-wrap .sec-tag { color: var(--warm); }
+.cfg-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+.cfg-card {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: var(--radius); padding: 34px 26px;
+  transition: all 0.3s; opacity:0; transform:translateY(18px);
+}
+.cfg-card.vis { opacity:1; transform:translateY(0); }
+.cfg-card:hover { background: rgba(255,255,255,0.09); border-color: rgba(184,92,56,0.35); transform: translateY(-4px); }
+.cfg-name { font-family:'Cormorant Garamond',serif; font-size:22px; font-weight:600; color:var(--white); margin-bottom:10px; }
+.cfg-desc { font-size:14px; line-height:1.7; color:rgba(255,255,255,0.48); }
+.cfg-badge {
+  display:inline-block; margin-top:18px;
+  background:rgba(184,92,56,0.2); color:var(--warm);
+  padding:5px 14px; border-radius:100px; font-size:12px;
+}
+
+/* WHO */
+.who-wrap { background:var(--bg2); border-radius:44px; margin:40px 24px; padding:96px 64px; }
+.who-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:2px; margin-top:56px; }
+.who-card {
+  background: var(--white); padding: 42px 38px;
+  opacity:0; transform:translateY(14px);
+  transition: opacity 0.5s, transform 0.5s, background 0.3s;
+}
+.who-card:first-child { border-radius:var(--radius) 0 0 0; }
+.who-card:nth-child(2) { border-radius:0 var(--radius) 0 0; }
+.who-card:nth-child(5) { border-radius:0 0 0 var(--radius); }
+.who-card:last-child { border-radius:0 0 var(--radius) 0; }
+.who-card.vis { opacity:1; transform:translateY(0); }
+.who-card:hover { background:var(--bg); }
+.who-num { font-family:'Cormorant Garamond',serif; font-size:13px; color:var(--accent); letter-spacing:0.1em; margin-bottom:14px; }
+.who-title { font-family:'Cormorant Garamond',serif; font-size:26px; font-weight:600; color:var(--ink); margin-bottom:10px; }
+.who-desc { font-size:14px; line-height:1.72; color:var(--ink2); }
+
+/* NUMBERS */
+.num-sec { padding:110px 64px; max-width:1240px; margin:0 auto; }
+.num-layout { display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:start; }
+.num-cards { display:flex; flex-direction:column; gap:10px; }
+.num-card {
+  background:var(--white); border-radius:var(--radius-sm);
+  padding:22px 30px; display:flex; justify-content:space-between; align-items:center;
+  opacity:0; transform:translateX(-14px);
+  transition: opacity 0.5s, transform 0.5s, box-shadow 0.3s;
+}
+.num-card.vis { opacity:1; transform:translateX(0); }
+.num-card:hover { box-shadow:0 8px 28px rgba(0,0,0,0.07); }
+.num-key { font-size:14px; color:var(--ink2); }
+.num-val { font-family:'Cormorant Garamond',serif; font-size:26px; font-weight:600; color:var(--ink); }
+.num-val.a { color:var(--accent); }
+.num-note { background:var(--accent-soft); border-radius:var(--radius); padding:44px 40px; }
+.num-note h3 { font-family:'Cormorant Garamond',serif; font-size:30px; font-weight:600; color:var(--ink); margin-bottom:14px; line-height:1.2; }
+.num-note p { font-size:15px; line-height:1.75; color:var(--ink2); margin-bottom:18px; }
+.num-note p:last-child { margin-bottom:0; }
+
+/* APP */
+.app-wrap {
+  margin:0 24px 40px; background:var(--bg2);
+  border-radius:44px; padding:96px 64px;
+  display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; overflow:hidden;
+}
+.app-feats { margin-top:40px; display:flex; flex-direction:column; gap:26px; }
+.app-feat { display:flex; gap:16px; align-items:flex-start; }
+.feat-ico {
+  width:40px; height:40px; background:var(--white);
+  border-radius:12px; display:flex; align-items:center;
+  justify-content:center; font-size:20px; flex-shrink:0;
+  box-shadow:0 2px 10px rgba(0,0,0,0.07);
+}
+.feat-title { font-size:16px; font-weight:500; color:var(--ink); margin-bottom:3px; }
+.feat-desc { font-size:14px; line-height:1.62; color:var(--ink2); }
+.app-pill {
+  display:inline-flex; align-items:center; gap:10px; margin-top:36px;
+  background:var(--white); border-radius:100px; padding:11px 22px;
+  font-size:13px; color:var(--ink2); box-shadow:0 4px 18px rgba(0,0,0,0.07);
+}
+.pill-dot { width:8px; height:8px; border-radius:50%; background:var(--accent); animation:pd 2s ease-in-out infinite; }
+@keyframes pd { 0%,100%{opacity:0.5;transform:scale(0.9)} 50%{opacity:1;transform:scale(1.2)} }
+
+/* PHONE */
+.phone-wrap { display:flex; justify-content:center; position:relative; }
+.phone-wrap::before {
+  content:''; position:absolute; bottom:-30px; left:50%; transform:translateX(-50%);
+  width:180px; height:50px;
+  background:radial-gradient(ellipse, rgba(0,0,0,0.1), transparent); filter:blur(14px);
+}
+.phone {
+  width:252px; background:var(--ink); border-radius:44px; padding:13px;
+  box-shadow: 0 56px 100px rgba(0,0,0,0.2), 0 0 0 1px rgba(255,255,255,0.07) inset;
+  animation: pf 5s ease-in-out infinite;
+}
+@keyframes pf { 0%,100%{transform:translateY(0) rotate(-1.5deg)} 50%{transform:translateY(-9px) rotate(-1.5deg)} }
+.phone-inner { background:var(--bg); border-radius:34px; overflow:hidden; aspect-ratio:9/19.5; display:flex; flex-direction:column; }
+.p-status { background:var(--ink); padding:16px 20px 8px; display:flex; justify-content:space-between; align-items:center; }
+.p-logo { font-family:'Cormorant Garamond',serif; font-size:15px; font-weight:600; letter-spacing:0.1em; color:var(--white); }
+.p-time { font-size:12px; color:rgba(255,255,255,0.45); }
+.p-body { flex:1; background:var(--bg); padding:18px 15px 14px; display:flex; flex-direction:column; gap:13px; overflow:hidden; }
+.p-greet { font-family:'Cormorant Garamond',serif; font-size:21px; font-weight:600; color:var(--ink); line-height:1.2; }
+.p-sub { font-size:11px; color:var(--ink3); }
+.p-order { background:var(--ink); border-radius:18px; padding:15px; }
+.p-olbl { font-size:9px; letter-spacing:0.12em; text-transform:uppercase; color:rgba(255,255,255,0.4); margin-bottom:5px; }
+.p-otitle { font-family:'Cormorant Garamond',serif; font-size:17px; font-weight:600; color:var(--white); margin-bottom:7px; }
+.p-odeadline { font-size:11px; color:var(--warm); }
+.p-mlbl { font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:var(--ink3); }
+.p-items { display:flex; flex-direction:column; gap:7px; }
+.p-item { background:var(--white); border-radius:11px; padding:9px 13px; display:flex; justify-content:space-between; align-items:center; }
+.p-iname { font-size:12px; font-weight:500; color:var(--ink); }
+.p-isub { font-size:9px; color:var(--ink3); }
+.p-iright { display:flex; align-items:center; gap:7px; }
+.p-iprice { font-family:'Cormorant Garamond',serif; font-size:15px; font-weight:600; color:var(--ink); }
+.p-iadd { width:21px; height:21px; background:var(--ink); border-radius:50%; display:flex; align-items:center; justify-content:center; color:var(--white); font-size:14px; font-weight:300; }
+.p-nav { margin-top:auto; padding-top:9px; border-top:1px solid rgba(0,0,0,0.07); display:flex; justify-content:space-around; }
+.p-ni { display:flex; flex-direction:column; align-items:center; gap:2px; }
+.p-nico { font-size:15px; }
+.p-nlbl { font-size:8px; color:var(--ink3); }
+.p-nlbl.a { color:var(--accent); }
+
+/* SIGNUP */
+.sign-sec { padding:130px 64px; max-width:740px; margin:0 auto; text-align:center; }
+.sign-sub { font-size:17px; line-height:1.78; color:var(--ink2); margin-bottom:56px; }
+.form-box { background:var(--white); border-radius:28px; padding:48px; box-shadow:0 8px 56px rgba(0,0,0,0.07); text-align:left; }
+.f-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:14px; }
+.fg { display:flex; flex-direction:column; gap:7px; }
+.fl { font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--ink3); }
+.fi, .fs {
+  background:var(--bg); border:1.5px solid transparent;
+  border-radius:10px; padding:13px 17px;
+  font-family:'Jost',sans-serif; font-size:15px; color:var(--ink);
+  outline:none; transition:border-color 0.2s, background 0.2s; -webkit-appearance:none; width:100%;
+}
+.fi::placeholder { color:var(--ink3); }
+.fi:focus,.fs:focus { border-color:var(--accent); background:var(--white); }
+.fs { cursor:pointer; }
+.f-submit {
+  width:100%; margin-top:18px; background:var(--ink); color:var(--white);
+  border:none; padding:17px; border-radius:10px;
+  font-family:'Jost',sans-serif; font-size:16px; font-weight:400; letter-spacing:0.04em;
+  cursor:pointer; transition:all 0.3s cubic-bezier(0.16,1,0.3,1);
+}
+.f-submit:hover { background:var(--accent); transform:translateY(-2px); box-shadow:0 12px 36px rgba(184,92,56,0.22); }
+.f-note { margin-top:12px; font-size:12px; color:var(--ink3); text-align:center; line-height:1.6; }
+.sign-ok { display:none; padding:56px 0; }
+.ok-circle { width:68px; height:68px; background:var(--accent-soft); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:28px; margin:0 auto 22px; }
+.sign-ok h3 { font-family:'Cormorant Garamond',serif; font-size:34px; font-weight:600; color:var(--ink); margin-bottom:10px; }
+.sign-ok p { font-size:16px; color:var(--ink2); line-height:1.7; }
+
+/* FOOTER */
+footer {
+  background:var(--ink); border-radius:44px 44px 0 0;
+  margin-top:40px; padding:76px 64px 44px;
+}
+.ft { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:56px; }
+.f-logo { font-family:'Cormorant Garamond',serif; font-size:34px; font-weight:600; letter-spacing:0.1em; color:var(--white); margin-bottom:8px; }
+.f-tag { font-size:14px; color:rgba(255,255,255,0.3); font-style:italic; font-family:'Cormorant Garamond',serif; }
+.f-links { display:flex; gap:68px; }
+.f-col h4 { font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:rgba(255,255,255,0.28); margin-bottom:18px; }
+.f-col a { display:block; font-size:15px; color:rgba(255,255,255,0.55); text-decoration:none; margin-bottom:11px; transition:color 0.2s; }
+.f-col a:hover { color:var(--white); }
+.fb { border-top:1px solid rgba(255,255,255,0.08); padding-top:26px; display:flex; justify-content:space-between; font-size:12px; color:rgba(255,255,255,0.22); }
+
+/* FADE-UP */
+.fu { opacity:0; transform:translateY(22px); transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1); }
+.fu.vis { opacity:1; transform:translateY(0); }
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  nav{padding:16px 20px;}
+  .nav-link{display:none;}
+  .hero{grid-template-columns:1fr;padding:96px 24px 56px;}
+  .hero-right{display:none;}
+  .stats-bar{margin:0 16px;padding:20px 24px;grid-template-columns:repeat(2,1fr);}
+  .stat-item:nth-child(2){border-right:none;}
+  .sec{padding:72px 24px;}
+  .c-grid{grid-template-columns:1fr;}
+  .cfg-wrap{margin:0 12px;padding:56px 24px;}
+  .cfg-grid{grid-template-columns:1fr 1fr;}
+  .who-wrap{margin:20px 12px;padding:56px 24px;}
+  .who-grid{grid-template-columns:1fr;}
+  .who-card:first-child{border-radius:var(--radius) var(--radius) 0 0;}
+  .who-card:nth-child(2){border-radius:0;}
+  .who-card:nth-child(5){border-radius:0;}
+  .who-card:last-child{border-radius:0 0 var(--radius) var(--radius);}
+  .num-sec{padding:72px 24px;}
+  .num-layout{grid-template-columns:1fr;}
+  .app-wrap{grid-template-columns:1fr;margin:20px 12px;padding:56px 24px;gap:44px;}
+  .sign-sec{padding:72px 24px;}
+  .f-grid{grid-template-columns:1fr;}
+  .form-box{padding:28px 20px;}
+  footer{margin:20px 0 0;padding:56px 24px 40px;border-radius:32px 32px 0 0;}
+  .ft{flex-direction:column;gap:36px;}
+  .f-links{flex-direction:column;gap:28px;}
+  .fb{flex-direction:column;gap:6px;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">GARÁGE</div>
+  <div class="nav-right">
+    <a href="#concept" class="nav-link">Konceptet</a>
+    <a href="#hvem" class="nav-link">For hvem</a>
+    <a href="#app" class="nav-link">App</a>
+    <a href="#signup" class="nav-btn">Bliv franchisetager</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-label">🥐 Franchise mikrobageri · Danmark</div>
+    <h1 class="hero-h1">
+      Der mangler en<br>rigtig bager<br>i din by.<br><em>Det kunne være dig.</em>
+    </h1>
+    <p class="hero-body">
+      GARÁGE er et færdigt bageri i en container. Vi giver dig opskrifterne, udstyret og oplæringen. Du bringer lysten.
+    </p>
+    <div class="hero-actions">
+      <a href="#signup" class="btn-dark">Hør mere om franchisen →</a>
+      <a href="#concept" class="btn-ghost">Se konceptet ↓</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <svg class="scene-svg" viewBox="0 0 520 440" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="260" cy="218" rx="230" ry="195" fill="#ede8df"/>
+      <g class="float-group">
+        <ellipse cx="260" cy="395" rx="200" ry="15" fill="rgba(0,0,0,0.07)"/>
+        <!-- Container body -->
+        <rect x="55" y="142" width="410" height="226" rx="20" fill="#1c1a17"/>
+        <!-- Panel shading -->
+        <rect x="74" y="150" width="48" height="210" rx="5" fill="#231f1b" opacity="0.7"/>
+        <rect x="130" y="150" width="48" height="210" rx="5" fill="#1a1815" opacity="0.7"/>
+        <rect x="186" y="150" width="48" height="210" rx="5" fill="#231f1b" opacity="0.7"/>
+        <rect x="242" y="150" width="48" height="210" rx="5" fill="#1a1815" opacity="0.7"/>
+        <rect x="298" y="150" width="48" height="210" rx="5" fill="#231f1b" opacity="0.7"/>
+        <rect x="354" y="150" width="48" height="210" rx="5" fill="#1a1815" opacity="0.7"/>
+        <rect x="400" y="150" width="56" height="210" rx="5" fill="#231f1b" opacity="0.7"/>
+        <!-- Roof -->
+        <rect x="46" y="130" width="428" height="20" rx="10" fill="#2a2720"/>
+        <!-- Name -->
+        <text x="260" y="182" text-anchor="middle"
+              font-family="Cormorant Garamond,Georgia,serif"
+              font-size="28" font-weight="600" fill="#f7f4ef" letter-spacing="10">GARÁGE</text>
+        <!-- Hatch warm glow -->
+        <rect x="162" y="200" width="206" height="146" rx="15" fill="url(#wg)"/>
+        <rect x="161" y="199" width="208" height="148" rx="16" fill="none" stroke="#b85c38" stroke-width="1.5" opacity="0.5"/>
+        <!-- Open door above -->
+        <rect x="162" y="174" width="206" height="28" rx="10" fill="#2a2720"/>
+        <!-- Counter ledge -->
+        <rect x="152" y="344" width="226" height="13" rx="7" fill="#2e2924"/>
+        <!-- Sourdough -->
+        <ellipse cx="210" cy="340" rx="27" ry="13" fill="#8B5E3C"/>
+        <ellipse cx="210" cy="336" rx="25" ry="11" fill="#7a5230"/>
+        <path d="M199 333 Q210 326 221 333" stroke="#6b4428" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <!-- Croissant -->
+        <path d="M250 345 Q260 331 273 333 Q284 335 283 344 Q272 347 260 346 Z" fill="#c89044"/>
+        <path d="M253 341 Q264 332 276 336" stroke="#a87030" stroke-width="1" fill="none" stroke-linecap="round"/>
+        <!-- Roll -->
+        <ellipse cx="315" cy="340" rx="17" ry="10" fill="#9B6B42"/>
+        <ellipse cx="315" cy="336" rx="15" ry="8.5" fill="#8B5E35"/>
+        <!-- Steam -->
+        <path class="steam1" d="M222 322 Q226 308 220 297" stroke="rgba(255,255,255,0.38)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <path class="steam2" d="M265 317 Q270 302 264 291" stroke="rgba(255,255,255,0.28)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <path class="steam3" d="M308 319 Q303 305 309 295" stroke="rgba(255,255,255,0.22)" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <!-- Deck -->
+        <rect x="55" y="362" width="172" height="26" rx="10" fill="#3a2f1c"/>
+        <line x1="78" y1="362" x2="78" y2="388" stroke="#2a2015" stroke-width="1.5"/>
+        <line x1="101" y1="362" x2="101" y2="388" stroke="#2a2015" stroke-width="1.5"/>
+        <line x1="124" y1="362" x2="124" y2="388" stroke="#2a2015" stroke-width="1.5"/>
+        <line x1="147" y1="362" x2="147" y2="388" stroke="#2a2015" stroke-width="1.5"/>
+        <line x1="170" y1="362" x2="170" y2="388" stroke="#2a2015" stroke-width="1.5"/>
+        <line x1="204" y1="362" x2="204" y2="388" stroke="#2a2015" stroke-width="1.5"/>
+        <!-- Table on deck -->
+        <ellipse cx="112" cy="357" rx="19" ry="8" fill="#4a3c24"/>
+        <rect x="110" y="355" width="4" height="20" fill="#3a2f1c"/>
+        <!-- Cups -->
+        <rect x="102" y="345" width="7" height="10" rx="3" fill="#d4895a" opacity="0.85"/>
+        <rect x="113" y="347" width="7" height="10" rx="3" fill="#d4895a" opacity="0.7"/>
+      </g>
+      <defs>
+        <radialGradient id="wg" cx="50%" cy="55%" r="50%">
+          <stop offset="0%" stop-color="#f5c57a" stop-opacity="0.5"/>
+          <stop offset="45%" stop-color="#c8763a" stop-opacity="0.28"/>
+          <stop offset="100%" stop-color="#3a2010" stop-opacity="0.72"/>
+        </radialGradient>
+      </defs>
+    </svg>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats-bar fu">
+  <div class="stat-item"><div class="stat-num">70%</div><div class="stat-lbl">Bruttomargin</div></div>
+  <div class="stat-item"><div class="stat-num">6–8</div><div class="stat-lbl">Produkter på menuen</div></div>
+  <div class="stat-item"><div class="stat-num">0</div><div class="stat-lbl">Krævet erfaring</div></div>
+  <div class="stat-item"><div class="stat-num">1</div><div class="stat-lbl">Container = komplet bageri</div></div>
+</div>
+
+<!-- CONCEPT -->
+<section class="sec" id="concept">
+  <div class="sec-tag fu">Konceptet</div>
+  <h2 class="sec-h2 fu">Et bageri.<br>En container.<br><em>Din by.</em></h2>
+  <p class="sec-lead fu">Vi har bygget alt fra grunden — udstyret, opskrifterne, oplæringen og brandet. Du vælger lokation, åbner lugen og bager.</p>
+  <div class="c-grid">
+    <div class="c-card"><div class="c-icon">🏭</div><div class="c-title">Containeren er forretningsmodellen</div><div class="c-desc">Ingen dyr husleje på en højgade. Containeren holder omkostningerne nede — så du kan holde priserne fair og stadig tjene godt.</div></div>
+    <div class="c-card"><div class="c-icon">📋</div><div class="c-title">Alt er klar fra dag ét</div><div class="c-desc">Ovn, hæveprøver, arbejdsbord, display og alle opskrifter leveret og installeret. HQ giver dig oplæringen. Du behøver ikke at vide noget om brød inden start.</div></div>
+    <div class="c-card"><div class="c-icon">🍞</div><div class="c-title">En smal menu er et aktiv</div><div class="c-desc">6–8 faste produkter giver hurtig mestring, minimalt spild og en tydelig identitet. Folk ved præcis hvad GARÁGE er — og de kommer tilbage for det.</div></div>
+  </div>
+</section>
+
+<!-- CONFIGS -->
+<div class="cfg-wrap">
+  <div class="sec-tag">Konfigurationer</div>
+  <h2 class="sec-h2">Vælg dit <em>udtryk</em></h2>
+  <p class="sec-lead">Alle containere har den samme kerne. Du vælger det ydre udtryk der passer til din lokation og dit budget.</p>
+  <div class="cfg-grid">
+    <div class="cfg-card"><div style="font-size:34px;margin-bottom:18px">📦</div><div class="cfg-name">The Standard</div><div class="cfg-desc">Basen. Serviceluge og rent brandudtryk. Ideel til parkeringsplads eller selvstændig grund.</div><div class="cfg-badge">Fra 1.500.000 kr</div></div>
+    <div class="cfg-card"><div style="font-size:34px;margin-bottom:18px">🪵</div><div class="cfg-name">The Deck</div><div class="cfg-desc">Træterrasse med bistroborde. Folk bliver, drikker kaffe og fortæller det videre.</div><div class="cfg-badge">Terrasse tilvalg</div></div>
+    <div class="cfg-card"><div style="font-size:34px;margin-bottom:18px">🏔️</div><div class="cfg-name">The Rooftop</div><div class="cfg-desc">Tagterrasse med ekstern trappe. Til de lokationer med udsigt og plads til at skabe noget særligt.</div><div class="cfg-badge">Premium</div></div>
+    <div class="cfg-card"><div style="font-size:34px;margin-bottom:18px">🏠</div><div class="cfg-name">The Building</div><div class="cfg-desc">Container-kernen integreret i en eksisterende bygning. Alle fordelene, vejrbeskyttes ramme.</div><div class="cfg-badge">Eksisterende bygning</div></div>
+  </div>
+</div>
+
+<!-- WHO -->
+<div class="who-wrap" id="hvem">
+  <div class="sec-tag fu">For hvem</div>
+  <h2 class="sec-h2 fu">Du behøver ikke<br>at kunne bage.<br><em>Du skal bare ville.</em></h2>
+  <p class="sec-lead fu">HQ giver dig alt hvad du teknisk behøver. GARÁGE er for folk med drive — uanset baggrund.</p>
+  <div class="who-grid">
+    <div class="who-card"><div class="who-num">01</div><div class="who-title">Den erfarne bager</div><div class="who-desc">Du kender håndværket. Nu vil du have brandet, systemet og supporten bag dig — uden at bygge det hele fra nul.</div></div>
+    <div class="who-card"><div class="who-num">02</div><div class="who-title">Den unge iværksætter</div><div class="who-desc">Du vil bygge noget i den by du voksede op i. GARÁGE giver dig butikken og brandet. Du bringer energien og lokalkendskabet.</div></div>
+    <div class="who-card"><div class="who-num">03</div><div class="who-title">Pensionisten</div><div class="who-desc">Du søger et meningsfuldt kapitel to med overskuelig skala og en social funktion i dit lokalsamfund.</div></div>
+    <div class="who-card"><div class="who-num">04</div><div class="who-title">Parret</div><div class="who-desc">I vil bygge noget sammen — med fleksibel arbejdsdeling og fælles ejerskab over noget ægte.</div></div>
+    <div class="who-card"><div class="who-num">05</div><div class="who-title">Karriereskifteren</div><div class="who-desc">Du vil ud af det store system og ind i noget med hænderne. GARÁGE er exit-planen med et rigtigt forretningsmæssigt fundament.</div></div>
+    <div class="who-card"><div class="who-num">06</div><div class="who-title">Lokalhelten</div><div class="who-desc">Du ser hullet i dit lokalsamfund. Du vil være den der fylder det ud — og skaber noget folk er stolte over at have.</div></div>
+  </div>
+</div>
+
+<!-- NUMBERS -->
+<section class="num-sec" id="tal">
+  <div class="sec-tag fu">Tallene</div>
+  <h2 class="sec-h2 fu">Ærlig økonomi.<br><em>Ingen overraskelser.</em></h2>
+  <div class="num-layout">
+    <div class="num-cards">
+      <div class="num-card"><div class="num-key">Investering — køb</div><div class="num-val a">1.500.000 kr</div></div>
+      <div class="num-card"><div class="num-key">Depositum — leje</div><div class="num-val">150–200.000 kr</div></div>
+      <div class="num-card"><div class="num-key">Månedlig leje</div><div class="num-val">~13.000 kr/md</div></div>
+      <div class="num-card"><div class="num-key">Royalty</div><div class="num-val">8–10.000 kr/md</div></div>
+      <div class="num-card"><div class="num-key">Bruttomargin</div><div class="num-val a">70%</div></div>
+      <div class="num-card"><div class="num-key">Estimeret månedsomsætning</div><div class="num-val">~93.000 kr</div></div>
+    </div>
+    <div class="num-note fu">
+      <h3>Hvad vil det sige i praksis?</h3>
+      <p>Et basale scenarie med 80 daglige kunder til et snit på 45 kr giver en månedsomsætning på ca. 93.000 kr. Med 70% bruttomargin og efter leje og royalties sidder der 30–44.000 kr tilbage til dig — i en by med lavere leveomkostninger end København.</p>
+      <p>For en pensionist et solidt supplement. For et par der deler arbejdet en fælles levevej. For en ung fundamentet for noget større.</p>
+      <p>Vi viser dig tallene fra vores egne pilotlokationer, inden du skriver under på noget.</p>
+    </div>
+  </div>
+</section>
+
+<!-- APP -->
+<div class="app-wrap" id="app">
+  <div class="app-content">
+    <div class="sec-tag">GARÁGE App</div>
+    <h2 class="sec-h2">Bestil<br>aftenen før.<br><em>Hent om morgenen.</em></h2>
+    <div class="app-feats">
+      <div class="app-feat"><div class="feat-ico">🌙</div><div><div class="feat-title">Daglig forudbestilling</div><div class="feat-desc">Kunder bestiller aftenen før og afhenter i et garanteret vindue om morgenen. Næsten nul spild for dig som bager.</div></div></div>
+      <div class="app-feat"><div class="feat-ico">⭐</div><div><div class="feat-title">Digitalt loyalitetskort</div><div class="feat-desc">Stempelkort som belønner de faste og skaber genbesøg helt automatisk.</div></div></div>
+      <div class="app-feat"><div class="feat-ico">📍</div><div><div class="feat-title">Find din GARÁGE</div><div class="feat-desc">Alle aktive lokationer samlet ét sted — altid opdateret.</div></div></div>
+    </div>
+    <div class="app-pill"><div class="pill-dot"></div><span>Kommer snart — iOS & Android</span></div>
+  </div>
+
+  <div class="phone-wrap">
+    <div class="phone">
+      <div class="phone-inner">
+        <div class="p-status"><div class="p-logo">GARÁGE</div><div class="p-time">08:14</div></div>
+        <div class="p-body">
+          <div><div class="p-greet">God morgen,<br>Mette. ☀️</div><div class="p-sub" style="margin-top:4px">GARÁGE Thisted · Tirsdag</div></div>
+          <div class="p-order"><div class="p-olbl">Bestil til i morgen</div><div class="p-otitle">Morgenkurven er klar 🥐</div><div class="p-odeadline">⏰ Frist kl. 21:00</div></div>
+          <div class="p-mlbl">Dagens udvalg</div>
+          <div class="p-items">
+            <div class="p-item"><div><div class="p-iname">Surdejsbrød</div><div class="p-isub">700g · Friskbagt</div></div><div class="p-iright"><div class="p-iprice">58 kr</div><div class="p-iadd">+</div></div></div>
+            <div class="p-item"><div><div class="p-iname">Croissant</div><div class="p-isub">Smørbaseret</div></div><div class="p-iright"><div class="p-iprice">24 kr</div><div class="p-iadd">+</div></div></div>
+            <div class="p-item" style="border:1.5px solid rgba(184,92,56,0.28)"><div><div class="p-iname">🌿 Rugbrød</div><div class="p-isub">Sæson: Frø & Kerne</div></div><div class="p-iright"><div class="p-iprice">52 kr</div><div class="p-iadd">+</div></div></div>
+          </div>
+          <div class="p-nav">
+            <div class="p-ni"><div class="p-nico">🏠</div><div class="p-nlbl a">Hjem</div></div>
+            <div class="p-ni"><div class="p-nico">🛒</div><div class="p-nlbl">Bestil</div></div>
+            <div class="p-ni"><div class="p-nico">📍</div><div class="p-nlbl">Find</div></div>
+            <div class="p-ni"><div class="p-nico">⭐</div><div class="p-nlbl">Kort</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SIGNUP -->
+<section class="sign-sec" id="signup">
+  <div class="sec-tag fu">Forhåndstilmelding</div>
+  <h2 class="sec-h2 fu">Bliv<br><em>franchisetager.</em></h2>
+  <p class="sign-sub fu">GARÁGE er endnu ikke åbent for franchiseansøgninger. Skriv dig op nu — de første på listen får prioriteret adgang og en personlig invitation til vores første informationsdag.</p>
+  <div class="form-box fu">
+    <form id="signupForm">
+      <div class="f-grid">
+        <div class="fg"><label class="fl">Fornavn</label><input type="text" class="fi" placeholder="Dit fornavn" required></div>
+        <div class="fg"><label class="fl">Efternavn</label><input type="text" class="fi" placeholder="Dit efternavn" required></div>
+      </div>
+      <div class="fg" style="margin-bottom:14px"><label class="fl">Email</label><input type="email" class="fi" placeholder="din@email.dk" required></div>
+      <div class="f-grid">
+        <div class="fg"><label class="fl">Postnummer</label><input type="text" class="fi" placeholder="F.eks. 7700" maxlength="4"></div>
+        <div class="fg"><label class="fl">Din baggrund</label><select class="fs"><option value="" disabled selected>Vælg…</option><option>Erfaren bager / kok</option><option>Iværksætter uden erfaring</option><option>Pensionist</option><option>Ung / studerende</option><option>Par / fælles projekt</option><option>Karriereskifter</option></select></div>
+      </div>
+      <button type="submit" class="f-submit">Hør mere om franchisen →</button>
+      <p class="f-note">Vi deler aldrig dine oplysninger. Du kan til enhver tid afmelde dig.</p>
+    </form>
+    <div class="sign-ok" id="signupOk">
+      <div class="ok-circle">✓</div>
+      <h3>Du er på listen.</h3>
+      <p>Tak for din interesse. Du hører fra os som en af de første, når vi åbner op.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="ft">
+    <div><div class="f-logo">GARÁGE</div><div class="f-tag">Dit eget bageri. Din by.</div></div>
+    <div class="f-links">
+      <div class="f-col"><h4>Konceptet</h4><a href="#concept">Hvad er GARÁGE?</a><a href="#">Konfigurationer</a><a href="#">Menuen</a></div>
+      <div class="f-col"><h4>Franchise</h4><a href="#hvem">For hvem?</a><a href="#tal">Tallene</a><a href="#signup">Tilmeld dig</a></div>
+      <div class="f-col"><h4>Kontakt</h4><a href="#">hej@garage-bakery.dk</a><a href="#">Instagram</a><a href="#">LinkedIn</a></div>
+    </div>
+  </div>
+  <div class="fb"><span>© 2025 GARÁGE — Franchise Mikrobageri</span><span>Fortrolighedspolitik · Vilkår</span></div>
+</footer>
+
+<script>
+document.getElementById('signupForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  this.style.display='none';
+  document.getElementById('signupOk').style.display='block';
+});
+
+const obs = new IntersectionObserver((entries)=>{
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('vis'); });
+}, { threshold:0.1, rootMargin:'0px 0px -30px 0px' });
+
+document.querySelectorAll('.fu,.c-card,.cfg-card,.who-card,.num-card').forEach((el,i)=>{
+  const isCard = el.classList.contains('c-card')||el.classList.contains('cfg-card')||el.classList.contains('who-card')||el.classList.contains('num-card');
+  if(!isCard){
+    const siblings = Array.from(el.parentElement.querySelectorAll('.fu'));
+    const idx = siblings.indexOf(el);
+    el.style.transitionDelay = (idx*0.06)+'s';
+  }
+  obs.observe(el);
+});
+
+document.querySelectorAll('.c-card,.cfg-card').forEach((el,i)=>{
+  el.style.transitionDelay=(i*0.1)+'s';
+  el.style.transition=`opacity 0.65s cubic-bezier(0.16,1,0.3,1) ${i*0.1}s, transform 0.65s cubic-bezier(0.16,1,0.3,1) ${i*0.1}s, box-shadow 0.4s`;
+});
+
+document.querySelectorAll('.who-card,.num-card').forEach((el,i)=>{
+  el.style.transitionDelay=(i*0.07)+'s';
+  el.style.transition=`opacity 0.55s cubic-bezier(0.16,1,0.3,1) ${i*0.07}s, transform 0.55s cubic-bezier(0.16,1,0.3,1) ${i*0.07}s, background 0.3s, box-shadow 0.3s`;
+});
+</script>
+</body>
+</html>
